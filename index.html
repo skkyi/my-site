@@ -5,96 +5,113 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SKy | Hub</title>
     <style>
+        /* إعدادات الصفحة الأساسية */
         body {
             margin: 0; padding: 0;
             background-color: #050505;
             display: flex; justify-content: center; align-items: center;
-            height: 100vh; overflow: hidden;
-            font-family: 'Courier New', Courier, monospace; /* خط برمجى بايثون */
+            min-height: 100vh; overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            flex-direction: column; /* لترتيب الصورة فوق المربع */
         }
-        
-        .bg-code {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            color: #0f0; opacity: 0.05; font-size: 10px; white-space: pre;
-            z-index: -1; animation: slide 20s linear infinite;
-        }
-        @keyframes slide { from { transform: translateY(0); } to { transform: translateY(-50%); } }
 
+        /* --- تنسيق الصورة الدائرية فوق المربع --- */
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%; /* لجعلها دائرية */
+            border: 3px solid #ffffff; /* حدود بيضاء فخمة */
+            box-shadow: 0 10px 30px rgba(255,255,255,0.2); /* تأثير إضاءة خفيف */
+            object-fit: cover; /* للحفاظ على أبعاد الصورة */
+            margin-bottom: 25px; /* مسافة بين الصورة والمربع */
+            z-index: 10; /* لضمان ظهورها فوق أي تأثيرات */
+        }
+
+        /* المربع الزجاجي */
         .glass-box {
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            padding: 40px 20px;
-            width: 300px;
+            padding: 40px 25px;
+            width: 320px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.9);
+            position: relative; /* مهم لترتيب العناصر داخله */
         }
 
-        /* تأثير الكتابة المتكرر */
+        /* تأثير الكتابة SKy المتكرر */
         .typewriter {
-            font-size: 32px;
-            color: #ffffff; /* النص أبيض */
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 35px;
+            color: #ffffff;
             overflow: hidden;
-            border-right: 3px solid #808080; /* مؤشر رصاصي */
+            border-right: 3px solid #808080;
             white-space: nowrap;
-            margin: 0 auto 30px;
+            margin: 0 auto 35px;
             width: 0;
             animation: 
-                typing 3s steps(3, end) infinite, /* تكرار الكتابة */
+                typing 3s steps(3, end) infinite,
                 blink 0.8s infinite;
         }
         @keyframes typing { 
             0%, 10% { width: 0; }
-            50%, 90% { width: 70px; } /* عرض كلمة SKy */
+            50%, 90% { width: 75px; }
             100% { width: 0; }
         }
         @keyframes blink { 50% { border-color: transparent } }
 
-        .links { display: flex; flex-direction: column; gap: 12px; }
+        /* تنسيق الخانات */
+        .links { display: flex; flex-direction: column; gap: 14px; }
+        
         .link-item {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #eee; text-decoration: none; padding: 14px;
-            border-radius: 12px; font-size: 13px; transition: 0.3s;
-            font-weight: 500;
-        }
-        .link-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #0f0; /* حدود خضراء عند التأشير */
-            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff; 
+            text-decoration: none; 
+            padding: 15px;
+            border-radius: 12px; 
+            font-size: 16px;
+            font-weight: 800;
+            transition: all 0.3s ease-in-out;
+            display: block;
         }
 
+        /* حركة الماوس - تتحول للأبيض */
+        .link-item:hover {
+            background: #ffffff;
+            color: #000000;
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+        }
+
+        /* الحقوق تحت */
         .dev-by {
-            margin-top: 25px;
-            font-size: 11px;
-            color: #808080; /* رصاصي */
+            margin-top: 30px;
+            font-size: 12px;
+            color: #808080;
+            font-weight: 600;
             letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
-    <div class="bg-code">
-        # SKy Hub Initialization...
-        import time
-        import sys
-        def animate_name():
-            name = "SKy"
-            for char in name:
-                sys.stdout.write(char)
-                time.sleep(0.1)
-        # Running profile...
-    </div>
+
+    <img src="profile.webp" alt="SKy Profile" class="profile-img">
+
     <div class="glass-box">
         <div class="typewriter">SKy</div>
+        
         <div class="links">
             <a href="https://discord.com/users/1187826589031989258" class="link-item" target="_blank">Discord</a>
             <a href="https://discord.gg/69l" class="link-item" target="_blank">Server Sixty Nine</a>
             <a href="https://www.instagram.com/ry.i?igsh=MXMxYW41ZWs4MTIzYQ%3D%3D&utm_source=qr" class="link-item" target="_blank">Instagram</a>
             <a href="https://www.tiktok.com/@.rrr?_r=1&_t=ZS-95Y2co5BCqK" class="link-item" target="_blank">TikTok</a>
         </div>
+
         <div class="dev-by">Dev By : Sky</div>
     </div>
+
 </body>
 </html>
