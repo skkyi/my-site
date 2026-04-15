@@ -25,6 +25,12 @@
             z-index: 9999; /* تكون فوق كل شيء */
             transition: opacity 1.5s ease; /* سرعة الاختفاء التدريجي */
         }
+        .intro-text-wrapper {
+            /* لتمركز الكتابة تماماً */
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
         .intro-text {
             color: #ffffff;
             font-size: 24px;
@@ -35,11 +41,13 @@
             white-space: nowrap;
             overflow: hidden;
             width: 0;
+            /* عرض محدد للنص عشان ما ينسحب يسار */
             animation: intro-typing 1.5s steps(20, end) forwards;
         }
         @keyframes intro-typing {
+            /* عرض النص في النهاية (بالبكسل عشان الثبات) */
             from { width: 0 }
-            to { width: 100% }
+            to { width: 330px; } /* عدلتها عشان تناسب طول الجملة بالضبط */
         }
 
         /* تنسيق الصورة الدائرية */
@@ -98,7 +106,9 @@
 <body>
 
     <div id="intro-screen">
-        <div class="intro-text">Welcome to Info Sky</div>
+        <div class="intro-text-wrapper">
+            <div class="intro-text">Welcome to Info Sky</div>
+        </div>
     </div>
 
     <img src="profile.webp" alt="SKy Profile" class="profile-img">
