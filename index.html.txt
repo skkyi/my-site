@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKy | Hub</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background-color: #050505;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        /* خلفية الأكواد */
+        .bg-code {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            color: #0f0; opacity: 0.05; font-size: 10px; white-space: pre;
+            z-index: -1; animation: slide 20s linear infinite;
+        }
+        @keyframes slide { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+
+        /* المربع الزجاجي النحيل */
+        .glass-box {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 20px;
+            width: 280px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        /* تأثير الكتابة SKy */
+        .typewriter {
+            font-family: monospace;
+            font-size: 32px;
+            color: #fff;
+            overflow: hidden;
+            border-right: 2px solid #0f0;
+            white-space: nowrap;
+            margin: 0 auto 30px;
+            width: 0;
+            animation: typing 2s steps(3, end) forwards, blink 0.8s infinite;
+        }
+        @keyframes typing { from { width: 0 } to { width: 65px } }
+        @keyframes blink { 50% { border-color: transparent } }
+
+        /* الروابط */
+        .links { display: flex; flex-direction: column; gap: 15px; }
+        .link-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff; text-decoration: none; padding: 12px;
+            border-radius: 10px; font-size: 14px; transition: 0.3s;
+            font-weight: bold;
+        }
+        .link-item:hover {
+            background: #fff; color: #000; transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-code">
+        # SKy System Loading...
+        import discord
+        from discord.ext import commands
+        TOKEN = "SECRET_SKy_CODE"
+        def start_bot():
+            print("SKy is online")
+        # Initialize Glass UI
+        # Background Processing...
+    </div>
+    <div class="glass-box">
+        <div class="typewriter">SKy</div>
+        <div class="links">
+            <a href="حط_رابط_ديسكوردك_هنا" class="link-item">سيرفر الديسكورد</a>
+            <a href="حط_رابط_انستقرامك_هنا" class="link-item">إنستقرام</a>
+            <a href="حط_رابط_سنابك_هنا" class="link-item">سناب شات</a>
+        </div>
+    </div>
+</body>
+</html>
