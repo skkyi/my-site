@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SKy | Hub</title>
+    <title>SkY?</title>
     <style>
         /* إعدادات الصفحة الأساسية */
         body {
@@ -12,19 +12,19 @@
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh; overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            flex-direction: column; /* لترتيب الصورة فوق المربع */
+            flex-direction: column;
         }
 
-        /* --- تنسيق الصورة الدائرية فوق المربع --- */
+        /* تنسيق الصورة الدائرية فوق المربع */
         .profile-img {
             width: 120px;
             height: 120px;
-            border-radius: 50%; /* لجعلها دائرية */
-            border: 3px solid #ffffff; /* حدود بيضاء فخمة */
-            box-shadow: 0 10px 30px rgba(255,255,255,0.2); /* تأثير إضاءة خفيف */
-            object-fit: cover; /* للحفاظ على أبعاد الصورة */
-            margin-bottom: 25px; /* مسافة بين الصورة والمربع */
-            z-index: 10; /* لضمان ظهورها فوق أي تأثيرات */
+            border-radius: 50%;
+            border: 3px solid #ffffff;
+            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
+            object-fit: cover;
+            margin-bottom: 25px;
+            z-index: 10;
         }
 
         /* المربع الزجاجي */
@@ -38,10 +38,9 @@
             width: 320px;
             text-align: center;
             box-shadow: 0 25px 50px rgba(0,0,0,0.9);
-            position: relative; /* مهم لترتيب العناصر داخله */
         }
 
-        /* تأثير الكتابة SKy المتكرر */
+        /* تأثير الكتابة SKy المتكرر داخل الصفحة */
         .typewriter {
             font-family: 'Courier New', Courier, monospace;
             font-size: 35px;
@@ -78,7 +77,6 @@
             display: block;
         }
 
-        /* حركة الماوس - تتحول للأبيض */
         .link-item:hover {
             background: #ffffff;
             color: #000000;
@@ -86,7 +84,6 @@
             box-shadow: 0 0 20px rgba(255,255,255,0.4);
         }
 
-        /* الحقوق تحت */
         .dev-by {
             margin-top: 30px;
             font-size: 12px;
@@ -112,6 +109,14 @@
 
         <div class="dev-by">Dev By : Sky</div>
     </div>
+
+    <script>
+        let titleText = "SkY? ";
+        setInterval(() => {
+            titleText = titleText.substring(1) + titleText.substring(0, 1);
+            document.title = titleText;
+        }, 300); // سرعة الحركة (300 جزء من الثانية)
+    </script>
 
 </body>
 </html>
