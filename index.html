@@ -59,25 +59,18 @@
             margin-top: 25px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             align-items: center;
         }
 
         .dev-by { font-size: 12px; color: #808080; font-weight: 600; letter-spacing: 1px; }
 
-        /* تنسيق عداد الزوار */
+        /* تنسيق العداد الجديد */
         .visitor-counter {
-            font-size: 10px;
-            color: #555; /* رصاصي أغمق */
-            font-family: monospace;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            opacity: 0.7;
+            transition: 0.3s;
         }
-        .visitor-counter img {
-            opacity: 0.6; /* جعل الأرقام باهتة قليلاً لتناسب التصميم */
-            height: 12px;
-        }
+        .visitor-counter:hover { opacity: 1; }
     </style>
 </head>
 <body>
@@ -98,8 +91,7 @@
             <div class="dev-by">Dev By : Sky</div>
             
             <div class="visitor-counter">
-                <span>VIEWS:</span>
-                <img src="https://profile-counter.glitch.me/sky-3um2/count.svg" alt="Visitor Count">
+                <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fsky-3um2.onrender.com&count_bg=%2300000000&title_bg=%2300000000&icon=&icon_color=%23E7E7E7&title=VIEWS&edge_flat=true" alt="Views">
             </div>
         </div>
     </div>
