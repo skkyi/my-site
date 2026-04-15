@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkY?</title>
     <style>
-        /* إعدادات الصفحة الأساسية */
         body {
             margin: 0; padding: 0;
             background-color: #050505;
@@ -15,19 +14,13 @@
             flex-direction: column;
         }
 
-        /* تنسيق الصورة الدائرية فوق المربع */
         .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 3px solid #ffffff;
+            width: 120px; height: 120px;
+            border-radius: 50%; border: 3px solid #ffffff;
             box-shadow: 0 10px 30px rgba(255,255,255,0.2);
-            object-fit: cover;
-            margin-bottom: 25px;
-            z-index: 10;
+            object-fit: cover; margin-bottom: 25px; z-index: 10;
         }
 
-        /* المربع الزجاجي */
         .glass-box {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
@@ -35,61 +28,55 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 40px 25px;
-            width: 320px;
-            text-align: center;
+            width: 320px; text-align: center;
             box-shadow: 0 25px 50px rgba(0,0,0,0.9);
         }
 
-        /* تأثير الكتابة SKy المتكرر داخل الصفحة */
         .typewriter {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 35px;
-            color: #ffffff;
-            overflow: hidden;
-            border-right: 3px solid #808080;
-            white-space: nowrap;
-            margin: 0 auto 35px;
-            width: 0;
-            animation: 
-                typing 3s steps(3, end) infinite,
-                blink 0.8s infinite;
+            font-size: 35px; color: #ffffff;
+            overflow: hidden; border-right: 3px solid #808080;
+            white-space: nowrap; margin: 0 auto 35px; width: 0;
+            animation: typing 3s steps(3, end) infinite, blink 0.8s infinite;
         }
-        @keyframes typing { 
-            0%, 10% { width: 0; }
-            50%, 90% { width: 75px; }
-            100% { width: 0; }
-        }
+        @keyframes typing { 0%, 10% { width: 0; } 50%, 90% { width: 75px; } 100% { width: 0; } }
         @keyframes blink { 50% { border-color: transparent } }
 
-        /* تنسيق الخانات */
         .links { display: flex; flex-direction: column; gap: 14px; }
-        
         .link-item {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ffffff; 
-            text-decoration: none; 
-            padding: 15px;
-            border-radius: 12px; 
-            font-size: 16px;
-            font-weight: 800;
-            transition: all 0.3s ease-in-out;
-            display: block;
+            color: #ffffff; text-decoration: none; padding: 15px;
+            border-radius: 12px; font-size: 16px; font-weight: 800;
+            transition: all 0.3s ease-in-out; display: block;
         }
-
         .link-item:hover {
-            background: #ffffff;
-            color: #000000;
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+            background: #ffffff; color: #000000;
+            transform: scale(1.02); box-shadow: 0 0 20px rgba(255,255,255,0.4);
         }
 
-        .dev-by {
-            margin-top: 30px;
-            font-size: 12px;
-            color: #808080;
-            font-weight: 600;
-            letter-spacing: 1px;
+        .footer-info {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .dev-by { font-size: 12px; color: #808080; font-weight: 600; letter-spacing: 1px; }
+
+        /* تنسيق عداد الزوار */
+        .visitor-counter {
+            font-size: 10px;
+            color: #555; /* رصاصي أغمق */
+            font-family: monospace;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .visitor-counter img {
+            opacity: 0.6; /* جعل الأرقام باهتة قليلاً لتناسب التصميم */
+            height: 12px;
         }
     </style>
 </head>
@@ -107,7 +94,14 @@
             <a href="https://www.tiktok.com/@.rrr?_r=1&_t=ZS-95Y2co5BCqK" class="link-item" target="_blank">TikTok</a>
         </div>
 
-        <div class="dev-by">Dev By : Sky</div>
+        <div class="footer-info">
+            <div class="dev-by">Dev By : Sky</div>
+            
+            <div class="visitor-counter">
+                <span>VIEWS:</span>
+                <img src="https://profile-counter.glitch.me/sky-3um2/count.svg" alt="Visitor Count">
+            </div>
+        </div>
     </div>
 
     <script>
@@ -115,7 +109,7 @@
         setInterval(() => {
             titleText = titleText.substring(1) + titleText.substring(0, 1);
             document.title = titleText;
-        }, 300); // سرعة الحركة (300 جزء من الثانية)
+        }, 300);
     </script>
 
 </body>
