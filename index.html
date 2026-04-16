@@ -132,11 +132,11 @@
     </div>
 
     <script>
-        // 1. نظام النقاط المتحركة (Particles)
+        // 1. نظام النقاط والخطوط التفاعلية (The Constellation Script)
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let particlesArray = [];
-        const numberOfParticles = 80;
+        const numberOfParticles = 70; // خففت العدد قليلاً عشان الخطوط ما تستهلك المعالج
 
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -151,9 +151,9 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.speedY = Math.random() * 1 - 0.5;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.8 - 0.4; // سرعة حركة النقاط
+                this.speedY = Math.random() * 0.8 - 0.4;
             }
             update() {
                 this.x += this.speedX;
@@ -163,24 +163,48 @@
                 let dy = mouse.y - this.y;
                 let distance = Math.sqrt(dx * dx + dy * dy);
                 
-                // تأثير اللحاق بالماوس
+                // تأثير الجذب المغناطيسي للماوس
                 if (distance < 120) {
-                    this.x += dx * 0.01;
-                    this.y += dy * 0.01;
+                    this.x += dx * 0.02;
+                    this.y += dy * 0.02;
                 }
 
                 if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
                 if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
             }
             draw() {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
 
+        // دالة رسم الخطوط بين النقاط المتقاربة
+        function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let dx = particlesArray[a].x - particlesArray[b].x;
+                    let dy = particlesArray[a].y - particlesArray[b].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    // إذا كانت المسافة بين نقطتين أقل من 100 بكسل، ارسم خطاً
+                    if (distance < 100) {
+                        opacityValue = 1 - (distance / 100); // كل ما بعدت، الخط يختفي
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${opacityValue})`;
+                        ctx.lineWidth = 0.5; // سمك الخط رفيع جداً لفخامة أكثر
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
         function init() {
+            particlesArray = []; // تنظيف المصفوفة قبل البدء
             for (let i = 0; i < numberOfParticles; i++) {
                 particlesArray.push(new Particle());
             }
@@ -192,6 +216,7 @@
                 particlesArray[i].update();
                 particlesArray[i].draw();
             }
+            connect(); // استدعاء دالة التوصيل بعد تحديث النقاط
             requestAnimationFrame(animate);
         }
 
@@ -201,6 +226,7 @@
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            init(); // إعادة تهيئة النقاط لتناسب حجم الشاشة الجديد
         });
 
         // 2. تحريك عنوان التبويبة
