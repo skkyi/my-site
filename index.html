@@ -13,6 +13,16 @@
             min-height: 100vh; overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             flex-direction: column;
+            color: white;
+        }
+
+        /* لوحة النقاط المتحركة خلفية */
+        #particleCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1; /* خلف المربع الزجاجي */
+            pointer-events: none;
         }
 
         /* --- شاشة الترحيب السوداء --- */
@@ -22,14 +32,11 @@
             width: 100%; height: 100%;
             background-color: #000000;
             display: flex; justify-content: center; align-items: center;
-            z-index: 9999; /* تكون فوق كل شيء */
-            transition: opacity 1.5s ease; /* سرعة الاختفاء التدريجي */
+            z-index: 9999;
+            transition: opacity 1.5s ease;
         }
         .intro-text-wrapper {
-            /* لتمركز الكتابة تماماً */
-            display: flex;
-            justify-content: center;
-            width: 100%;
+            display: flex; justify-content: center; width: 100%;
         }
         .intro-text {
             color: #ffffff;
@@ -41,16 +48,14 @@
             white-space: nowrap;
             overflow: hidden;
             width: 0;
-            /* عرض محدد للنص عشان ما ينسحب يسار */
             animation: intro-typing 1.5s steps(20, end) forwards;
         }
         @keyframes intro-typing {
-            /* عرض النص في النهاية (بالبكسل عشان الثبات) */
             from { width: 0 }
-            to { width: 330px; } /* عدلتها عشان تناسب طول الجملة بالضبط */
+            to { width: 330px; }
         }
 
-        /* تنسيق الصورة الدائرية */
+        /* التنسيق الأساسي للمحتوى */
         .profile-img {
             width: 120px; height: 120px;
             border-radius: 50%; border: 3px solid #ffffff;
@@ -58,7 +63,6 @@
             object-fit: cover; margin-bottom: 25px; z-index: 10;
         }
 
-        /* المربع الزجاجي */
         .glass-box {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
@@ -68,9 +72,9 @@
             padding: 40px 25px;
             width: 320px; text-align: center;
             box-shadow: 0 25px 50px rgba(0,0,0,0.9);
+            z-index: 10; /* فوق النقاط */
         }
 
-        /* تأثير الكتابة SKy المتكرر */
         .typewriter {
             font-family: 'Courier New', Courier, monospace;
             font-size: 35px; color: #ffffff;
@@ -81,29 +85,28 @@
         @keyframes typing { 0%, 10% { width: 0; } 50%, 90% { width: 75px; } 100% { width: 0; } }
         @keyframes blink { 50% { border-color: transparent } }
 
-        /* تنسيق الخانات */
         .links { display: flex; flex-direction: column; gap: 14px; }
         .link-item {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #ffffff; text-decoration: none; padding: 15px;
             border-radius: 12px; font-size: 16px; font-weight: 800;
-            transition: all 0.3s ease-in-out; display: block;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: block;
         }
         .link-item:hover {
             background: #ffffff; color: #000000;
-            transform: scale(1.02); box-shadow: 0 0 20px rgba(255,255,255,0.4);
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,255,255,0.3);
         }
 
-        .footer-info {
-            margin-top: 25px;
-            display: flex; flex-direction: column;
-            gap: 10px; align-items: center;
-        }
+        .footer-info { margin-top: 25px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
         .dev-by { font-size: 12px; color: #808080; font-weight: 600; letter-spacing: 1px; }
     </style>
 </head>
 <body>
+
+    <canvas id="particleCanvas"></canvas>
 
     <div id="intro-screen">
         <div class="intro-text-wrapper">
@@ -118,7 +121,7 @@
         
         <div class="links">
             <a href="https://discord.com/users/1187826589031989258" class="link-item" target="_blank">Discord</a>
-            <a href="https://discord.gg/69l" class="link-item" target="_blank">Server Sixty Nine</a>
+            <a href="https://discord.gg/69L" class="link-item" target="_blank">Server Sixty Nine</a>
             <a href="https://www.instagram.com/ry.i?igsh=MXMxYW41ZWs4MTIzYQ%3D%3D&utm_source=qr" class="link-item" target="_blank">Instagram</a>
             <a href="https://www.tiktok.com/@.rrr?_r=1&_t=ZS-95Y2co5BCqK" class="link-item" target="_blank">TikTok</a>
         </div>
@@ -129,22 +132,93 @@
     </div>
 
     <script>
-        // تحريك عنوان التبويبة
+        // 1. نظام النقاط المتحركة (Particles)
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+        const numberOfParticles = 80;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const mouse = { x: null, y: null };
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                
+                // تأثير اللحاق بالماوس
+                if (distance < 120) {
+                    this.x += dx * 0.01;
+                    this.y += dy * 0.01;
+                }
+
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // 2. تحريك عنوان التبويبة
         let titleText = "SkY? ";
         setInterval(() => {
             titleText = titleText.substring(1) + titleText.substring(0, 1);
             document.title = titleText;
         }, 300);
 
-        // إخفاء شاشة الترحيب تدريجياً بعد ثانيتين
+        // 3. إخفاء شاشة الترحيب
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const intro = document.getElementById('intro-screen');
                 intro.style.opacity = '0';
                 setTimeout(() => {
                     intro.style.display = 'none';
-                }, 1500); // إزالة العنصر تماماً بعد انتهاء الأنيميشن
-            }, 2000); // مدة بقاء الرسالة (ثانيتين)
+                }, 1500);
+            }, 2000);
         });
     </script>
 
